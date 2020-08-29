@@ -1,0 +1,136 @@
+<section class="wrap" id="AddEdit">
+  <div class="navbar">
+    <a class="pills left cancel" [routerLink]="['/', 'alarm-list']">Cancel</a>
+    <h1>Alarm/Edit</h1>
+    <a
+      class="pills right save"
+      *ngIf="editId"
+      (click)="alarmForm.form.valid && alarmForm.ngSubmit.emit()"
+      >Save</a
+    >
+  </div>
+  <div class="page">
+    <div class="content-block-title">Select Time</div>
+
+    <form (ngSubmit)="onSubmit()" #alarmForm="ngForm">
+      <div class="content-block-inner">
+        <p>
+          <select
+            class="form-control"
+            id="hour"
+            required
+            [(ngModel)]="model.hour"
+            name="hour"
+            #hour="ngModel"
+          >
+            <option *ngFor="let hh of hours" [value]="hh">{{ hh }}</option>
+          </select>
+          <select
+            class="form-control"
+            id="minute"
+            required
+            [(ngModel)]="model.minute"
+            name="minute"
+            #minute="ngModel"
+          >
+            <option *ngFor="let mm of minutes" [value]="mm">{{ mm }}</option>
+          </select>
+          <select
+            class="form-control"
+            id="periods"
+            required
+            [(ngModel)]="model.periods"
+            name="periods"
+            #periods="ngModel"
+          >
+            <option>AM</option>
+            <option>PM</option>
+          </select>
+        </p>
+
+        <p class="item select selected">
+          <label for="Snooze">
+            <input
+              class="form-control"
+              id="snooze"
+              [(ngModel)]="model.snooze"
+              name="snooze"
+              type="checkbox"
+              [checked]="model.snooze"
+            />
+            <span>Snooze</span>
+          </label>
+        </p>
+        <p class="item select selected">
+          <label for="label">
+            <input
+              class="form-control"
+              id="label"
+              [(ngModel)]="model.label"
+              type="text"
+              value=""
+              name="label"
+            />
+            <span>Label</span>
+          </label>
+        </p>
+      </div>
+
+      <div class="content-block-title">Repeat</div>
+      <ul class="list">
+        <li
+          class="item select selected"
+          *ngFor="let day of objectKey(daysDefault); let i = index"
+        >
+          <label [for]="day">
+            <input
+              class="form-control"
+              [id]="day"
+              [name]="day"
+              [(ngModel)]="model.repeat[day]"
+              type="checkbox"
+              [checked]="model.repeat[day]"
+              [id]="day"
+            />
+            <span>{{ day }}</span>
+          </label>
+        </li>
+      </ul>
+      <div class="content-block-title">Sound</div>
+      <ul class="list">
+        <li class="item select selected" *ngFor="let sound of sounds">
+          <label for="item">
+            <input
+              class="form-control"
+              [(ngModel)]="model.sound"
+              [value]="sound"
+              type="radio"
+              [id]="sound"
+              name="sound"
+              (change)="playSound(sound)"
+            />
+            <span>{{ sound }}</span>
+          </label>
+        </li>
+      </ul>
+    </form>
+  </div>
+  <div class="action">
+    <!-- show this if you are adding alarm -->
+    <a
+      *ngIf="!editId"
+      (click)="alarmForm.form.valid && alarmForm.ngSubmit.emit()"
+      data-panel="left"
+      class="button open-panel"
+      >Save Alarm</a
+    >
+    <!-- show this if you are editing alarm -->
+    <a
+      *ngIf="editId"
+      (click)="delete(editId)"
+      data-panel="left"
+      class="button open-panel danger"
+      >Delete Alarm</a
+    >
+  </div>
+</section>

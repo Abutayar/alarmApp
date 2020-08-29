@@ -1,0 +1,39 @@
+<section class="wrap" id="clock">
+  <div class="navbar">
+    <a class="pills left editAlarms" *ngIf="(alarmService.getAlarmList() | async).length" [routerLink]="['/', 'alarm-edit']">Edit</a>
+    <h1>Alarm</h1>
+    <a class="pills right addAlarm" [routerLink]="['/', 'alarm-add']">Add</a>
+  </div>
+  <div class="page">
+    <!-- show this when no alarms are set -->
+    <div class="clock" *ngIf="!(alarmService.getAlarmList() | async).length">
+      <p>No Alarms set</p>
+    </div>
+    <ul class="list">
+      <li class="item" *ngFor="let item of alarmService.getAlarmList() | async">
+        <label
+          href="#"
+          data-template="about"
+          data-context-name="about"
+          class="item-link item-content"
+        >
+          <a href="" class="remove">X</a>
+          <input (change)="updateStatus(item.id,item.status)" type="checkbox" [checked]="item.status" />
+          <app-alarm-info
+            [label]="item.label"
+            [days]="item.repeat"
+            [hh]="item.hour"
+            [mm]="item.minute"
+            [periods]="item.periods"
+          ></app-alarm-info>
+        </label>
+      </li>
+    </ul>
+  </div>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <a class="link" [routerLink]="['/']">Clock</a>
+    </div>
+  </div>
+</section>

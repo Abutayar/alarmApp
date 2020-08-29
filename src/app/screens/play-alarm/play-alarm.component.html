@@ -1,0 +1,16 @@
+<section class="wrap" id="AlarmPLaying">
+  <div class="page alarm">
+      <app-digital-clock>
+        <p class="">
+          {{label}}
+        </p>
+      </app-digital-clock>
+
+      <div class="action">
+        <a  data-panel="left" *ngIf="isSnooze" (click)="snooze()" class="button open-panel">Snooze</a>
+        <a  data-panel="left" (click)='stop()' class="button small">Stop</a>
+      </div>
+
+
+  </div>
+</section>

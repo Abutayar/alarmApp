@@ -1,0 +1,28 @@
+<section class="wrap" id="alarmList">
+  <div class="navbar">
+    <a class="pills left editAlarms" [routerLink]="['/', 'alarm-list']">Done</a>
+    <h1>Edit Alarm</h1>
+  </div>
+  <div class="page">
+    <div class="clock" *ngIf="!(alarmService.getAlarmList() | async).length">
+      <p>No Alarms set</p>
+    </div>
+    <ul class="list">
+      <li class="item edit" *ngFor="let item of alarmService.getAlarmList() | async">
+        <a class="remove pointer" (click)="delete(item.id)">X</a>
+          <label
+            class="item-link item-content pointer"
+            [routerLink]="['/'+ 'alarm-edit/'+item.id]"
+          >
+            <app-alarm-info
+              [label]="item.label"
+              [days]="item.repeat"
+              [hh]="item.hour"
+              [mm]="item.minute"
+              [periods]="item.periods"
+            ></app-alarm-info>
+          </label>
+      </li>
+    </ul>
+  </div>
+</section>
